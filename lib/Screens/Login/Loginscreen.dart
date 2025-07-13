@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/Screens/OTP/otp_screen.dart';
 import 'package:whatsapp_clone/Screens/Widgets/ui_helpper.dart';
 
 class Loginscreen extends StatefulWidget {
@@ -57,7 +58,7 @@ class _loginState extends State<Loginscreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 40,
                   child: TextField(
                     keyboardType: TextInputType.number,
@@ -81,13 +82,13 @@ class _loginState extends State<Loginscreen> {
                     ),
                   ),
                 ),
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 SizedBox(
                   width: 250,
                   child: TextField(
                     keyboardType:TextInputType.number,
                     controller: phoneController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                           color: Color(0XFF00A884)
@@ -100,8 +101,19 @@ class _loginState extends State<Loginscreen> {
             )   
         ],
       ),
-      floatingActionButton: UiHelpper.CustomButton(callback: (){}, buttonname: "Next"),
+      floatingActionButton: UiHelpper.CustomButton(callback: (){
+        login(phoneController.text.toString());
+      }, buttonname: "Next"),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+
+  login(String phonenumber){
+    if(phonenumber==""){
+      return ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:Text("Please Enter Mobile Number"),backgroundColor: Color(0XFF00A884),)); 
+    }
+    else{
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> OtpScreen(phonenumber: phonenumber,)));
+    }
   }
 }
